@@ -1,7 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database');
 const User = require('./users');
-
 const PointVote = sequelize.define('PointVote', {
     id: {
         type: DataTypes.BIGINT,

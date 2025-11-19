@@ -80,7 +80,7 @@ async function getUserById(req, res) {
     // Buscar información adicional asociada (si existe)
     const userInfo = await UserInfo.findOne({
       where: { user_id: id },
-      attributes: ['address', 'city', 'neiborhood', 'voting_point']
+      attributes: ['address', 'city', 'neiborhood']
     });
 
     if (userInfo) {
@@ -238,11 +238,11 @@ async function createUser(req, res) {
 
     if (rol === 'lider') {
 
-      const { address, city, neighborhood, voting_point } = req.body;
+      const { address, city, neighborhood } = req.body;
 
       const t = await sequelize.transaction();
 
-      if (!name || !document || !email || !password || !rol || !phone || !address || !city || !neighborhood || !voting_point) {
+      if (!name || !document || !email || !password || !rol || !phone || !address || !city || !neighborhood) {
         await t.rollback().catch(()=>{});
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
       }
@@ -280,7 +280,6 @@ async function createUser(req, res) {
           address,
           city,
           neiborhood: neighborhood,
-          voting_point
         }, { transaction: t });
 
         await t.commit();
@@ -289,7 +288,7 @@ async function createUser(req, res) {
           {
             include: [{
               model: UserInfo,
-              attributes: ['address', 'city', 'neiborhood', 'voting_point']
+              attributes: ['address', 'city', 'neiborhood']
             }],
             attributes: {
               exclude: ['password']
@@ -305,11 +304,11 @@ async function createUser(req, res) {
     }
 
     if (rol === 'votante') {
-      const { address, city, neighborhood, voting_point } = req.body;
+      const { address, city, neighborhood } = req.body;
 
       const t = await sequelize.transaction();
 
-      if (!name || !document || !rol || !phone || !address || !city || !neighborhood || !voting_point) {
+      if (!name || !document || !rol || !phone || !address || !city || !neighborhood ) {
         await t.rollback().catch(()=>{});
         return res.status(400).json({ message: "Todos los campos son obligatorios" });
       }
@@ -328,7 +327,6 @@ async function createUser(req, res) {
           address,
           city,
           neiborhood: neighborhood,
-          voting_point
         }, { transaction: t });
 
         await t.commit();
@@ -337,7 +335,7 @@ async function createUser(req, res) {
           {
             include: [{
               model: UserInfo,
-              attributes: ['address', 'city', 'neiborhood', 'voting_point']
+              attributes: ['address', 'city', 'neiborhood']
             }],
             attributes: {
               exclude: ['password']

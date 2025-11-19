@@ -1,6 +1,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database');
 const User = require('./users');
+const PointVote = require('./point_vote');
+
 const UserInfo = sequelize.define('UserInfo', {
     id: {
         type: DataTypes.BIGINT,
@@ -16,6 +18,14 @@ const UserInfo = sequelize.define('UserInfo', {
             key: 'id',
         }
     },
+    PointVote_id: {
+        type: DataTypes.BIGINT,
+        allowNull: true,
+        references: {
+            model: PointVote,
+            key: 'id',
+        }
+    },
     address: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -28,10 +38,6 @@ const UserInfo = sequelize.define('UserInfo', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    voting_point:{
-        type: DataTypes.STRING,
-        allowNull: true,
-    }
 },{
     tableName: "UserInfo",
     timestamps: true,
@@ -40,6 +46,9 @@ const UserInfo = sequelize.define('UserInfo', {
 
 User.hasOne(UserInfo, { foreignKey: 'user_id', onDelete: 'CASCADE' });
 UserInfo.belongsTo(User, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+
+PointVote.hasMany(UserInfo, { foreignKey: 'PointVote_id' });
+UserInfo.belongsTo(PointVote, { foreignKey: 'PointVote_id' });
 
 
 module.exports = UserInfo;

@@ -16,5 +16,6 @@ router.use('/admin/users', authenticateJWT, verifyRoles(['admin']), require('./r
 
 //superadmin routes
 router.use('/superadmin/users', authenticateJWT, verifyRoles(['superadmin']), require('./routes/superadmin/users'));
+router.use('/superadmin/point-votes', authenticateJWT, verifyRoles(['superadmin']), require('./routes/superadmin/pointVote'));
 
 module.exports = router;

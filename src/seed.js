@@ -56,7 +56,7 @@ async function createTestUsers() {
 					address: 'Calle Principal 123',
 					city: 'Ciudad Ejemplo',
 					neighborhood: 'Barrio Central',
-					voting_point: 'Punto A'
+
 				}
 			},
 			{
@@ -69,7 +69,7 @@ async function createTestUsers() {
 					address: 'Carrera 10 #20-30',
 					city: 'Ciudad Ejemplo',
 					neighborhood: 'Barrio Norte',
-					voting_point: 'Punto B'
+
 				}
 			},
 			{
@@ -128,7 +128,6 @@ async function createTestUsers() {
 					address: u.userInfo.address || null,
 					city: u.userInfo.city || null,
 					neiborhood: u.userInfo.neighborhood || u.userInfo.neiborhood || null,
-					voting_point: u.userInfo.voting_point || null,
 				};
 
 				const [info, infoCreated] = await UserInfo.findOrCreate({
@@ -141,7 +140,6 @@ async function createTestUsers() {
 					if (info.address !== infoValues.address) { info.address = infoValues.address; infoNeedsSave = true; }
 					if (info.city !== infoValues.city) { info.city = infoValues.city; infoNeedsSave = true; }
 					if (info.neiborhood !== infoValues.neiborhood && info.neiborhood !== undefined) { info.neiborhood = infoValues.neiborhood; infoNeedsSave = true; }
-					if (info.voting_point !== infoValues.voting_point) { info.voting_point = infoValues.voting_point; infoNeedsSave = true; }
 					if (infoNeedsSave) {
 						await info.save();
 						console.log(`UserInfo actualizado para documento: ${u.document}`);
