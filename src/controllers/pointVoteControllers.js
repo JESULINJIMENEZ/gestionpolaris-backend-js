@@ -104,8 +104,66 @@ async function createPointVote(req, res) {
     }
 }
 
+//Update PointVote by id
+async function updatePointVote(req, res) {
+    try {
+        const { id } = req.params;
+        
+        if (!validator.isInt(id.toString(), { min: 1 })) {
+            return res.status(400).json({ message: "ID de punto de votación inválido" });
+        }
+        const { name, address, neighborhood, city } = req.body;
+        
+        const pointVote = await PointVote.findByPk(id);
+        if (!pointVote) {
+            return res.status(404).json({ message: "Punto de votación no encontrado" });
+        }
+
+
+        if (name) pointVote.name = name;
+        if (address) pointVote.address = address;
+        if (neighborhood) pointVote.neighborhood = neighborhood;
+        if (city) pointVote.city = city;
+
+        await pointVote.save();
+
+        return res.status(200).json(pointVote);
+        
+    } catch (error) {
+        console.error("Error al actualizar el punto de votación:", error);
+        return res.status(500).json({ message: "Error interno del servidor, Comuniquese con el Administrador" });
+    }
+}
+
+//delete PointVote by id
+async function deletePointVote(req, res) {
+    try {
+        const { id } = req.params;
+        
+        if (!validator.isInt(id.toString(), { min: 1 })) {
+            return res.status(400).json({ message: "ID de punto de votación inválido" });
+        }
+
+        const pointVote = await PointVote.findByPk(id);
+
+        if (!pointVote) {
+            return res.status(404).json({ message: "Punto de votación no encontrado" });
+        }
+
+        await pointVote.destroy();
+
+        return res.status(200).json({ message: "Punto de votación eliminado correctamente" });
+
+    } catch (error) {
+        console.error("Error al eliminar el punto de votación:", error);
+        return res.status(500).json({ message: "Error interno del servidor, Comuniquese con el Administrador" });
+    }
+}
+
 module.exports = {
     getPointVote,
     createPointVote,
-    getPointVoteById
+    getPointVoteById,
+    updatePointVote,
+    deletePointVote
 };

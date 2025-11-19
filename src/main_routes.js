@@ -12,6 +12,7 @@ router.use('/login', require('./routes/auth/login'));
 
 // Admin routes
 router.use('/admin/users', authenticateJWT, verifyRoles(['admin']), require('./routes/admin/users'));
+router.use('/admin/point-votes', authenticateJWT, verifyRoles(['admin']), require('./routes/admin/pointVote'));
 
 
 //superadmin routes
