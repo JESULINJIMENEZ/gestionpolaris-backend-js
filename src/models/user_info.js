@@ -30,7 +30,7 @@ const UserInfo = sequelize.define('UserInfo', {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    neiborhood: {
+    neighborhood: {
         type: DataTypes.STRING,
         allowNull: true,
     },

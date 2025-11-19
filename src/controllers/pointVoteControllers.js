@@ -73,7 +73,7 @@ async function createPointVote(req, res) {
 
         const create_by = req.user.id;
 
-        const { name, address, neiborhood, city } = req.body;
+        const { name, address, neighborhood, city } = req.body;
         //validar que no exista un punto de votacion con el mismo nombre y direccion
         const existingPointVote = await PointVote.findOne({
             where: {
@@ -91,7 +91,7 @@ async function createPointVote(req, res) {
         const newPointVote = await PointVote.create({
             name,
             address,
-            neiborhood: neiborhood,
+            neighborhood: neighborhood,
             city,
             create_by
         });

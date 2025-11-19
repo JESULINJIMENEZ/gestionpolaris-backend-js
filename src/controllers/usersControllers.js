@@ -80,15 +80,15 @@ async function getUserById(req, res) {
     // Buscar información adicional asociada (si existe)
     const userInfo = await UserInfo.findOne({
       where: { user_id: id },
-      attributes: ['address', 'city', 'neiborhood']
+      attributes: ['address', 'city', 'neighborhood']
     });
 
     if (userInfo) {
       const infoObj = userInfo.toJSON();
-      // normalize misspelled column `neiborhood` -> `neighborhood` in response
-      if (infoObj.neiborhood !== undefined) {
-        infoObj.neighborhood = infoObj.neiborhood;
-        delete infoObj.neiborhood;
+      // normalize misspelled column `neighborhood` -> `neighborhood` in response
+      if (infoObj.neighborhood !== undefined) {
+        infoObj.neighborhood = infoObj.neighborhood;
+        delete infoObj.neighborhood;
       }
       userObj.userInfo = infoObj;
     }
@@ -179,7 +179,6 @@ async function deleteUser(req, res) {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 }
-
 
 // Create User
 async function createUser(req, res) {
@@ -279,7 +278,7 @@ async function createUser(req, res) {
           user_id: newUser.id,
           address,
           city,
-          neiborhood: neighborhood,
+          neighborhood: neighborhood,
         }, { transaction: t });
 
         await t.commit();
@@ -288,7 +287,7 @@ async function createUser(req, res) {
           {
             include: [{
               model: UserInfo,
-              attributes: ['address', 'city', 'neiborhood']
+              attributes: ['address', 'city', 'neighborhood']
             }],
             attributes: {
               exclude: ['password']
@@ -326,7 +325,7 @@ async function createUser(req, res) {
           user_id: newUser.id,
           address,
           city,
-          neiborhood: neighborhood,
+          neighborhood: neighborhood,
         }, { transaction: t });
 
         await t.commit();
@@ -335,7 +334,7 @@ async function createUser(req, res) {
           {
             include: [{
               model: UserInfo,
-              attributes: ['address', 'city', 'neiborhood']
+              attributes: ['address', 'city', 'neighborhood']
             }],
             attributes: {
               exclude: ['password']
@@ -397,9 +396,6 @@ async function createUser(req, res) {
     return res.status(500).json({ message: "Error interno del servidor" });
   }
 }
-
-
-
 
 module.exports = {
   createUser,

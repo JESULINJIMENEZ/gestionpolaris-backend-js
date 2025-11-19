@@ -16,7 +16,7 @@ const PointVote = sequelize.define('PointVote', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    neiborhood:{
+    neighborhood:{
         type: DataTypes.STRING,
         allowNull: false,
     },

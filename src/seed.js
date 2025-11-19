@@ -127,7 +127,7 @@ async function createTestUsers() {
 					user_id: user.id,
 					address: u.userInfo.address || null,
 					city: u.userInfo.city || null,
-					neiborhood: u.userInfo.neighborhood || u.userInfo.neiborhood || null,
+					neighborhood: u.userInfo.neighborhood || null,
 				};
 
 				const [info, infoCreated] = await UserInfo.findOrCreate({
@@ -139,7 +139,7 @@ async function createTestUsers() {
 					let infoNeedsSave = false;
 					if (info.address !== infoValues.address) { info.address = infoValues.address; infoNeedsSave = true; }
 					if (info.city !== infoValues.city) { info.city = infoValues.city; infoNeedsSave = true; }
-					if (info.neiborhood !== infoValues.neiborhood && info.neiborhood !== undefined) { info.neiborhood = infoValues.neiborhood; infoNeedsSave = true; }
+					if (info.neighborhood !== infoValues.neighborhood && info.neighborhood !== undefined) { info.neighborhood = infoValues.neighborhood; infoNeedsSave = true; }
 					if (infoNeedsSave) {
 						await info.save();
 						console.log(`UserInfo actualizado para documento: ${u.document}`);

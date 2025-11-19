@@ -10,6 +10,6 @@ router.get('/', pointVoteCtrl.getPointVote);
 router.get('/:id', pointVoteCtrl.getPointVoteById);
 
 // Create point vote with validation middleware
-router.post('/', validateRequired(['name','address','neiborhood','city']), pointVoteCtrl.createPointVote);
+router.post('/', validateRequired(['name','address','neighborhood','city']), pointVoteCtrl.createPointVote);
 
 module.exports = router;
