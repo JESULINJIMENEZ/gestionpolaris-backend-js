@@ -48,10 +48,71 @@ app.use(express.urlencoded({ extended: true }));
 // Usar las rutas principales
 app.use(Routes);
 
-app.get("/", (req, res) => {  
-  res.redirect("https://polarisgestion.com/");
+app.get("/", (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <style>
+          body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            background: black;
+            color: #00eaff;
+            font-family: Arial, sans-serif;
+          }
 
+          /* Fondo de estrellas */
+          .stars {
+            width: 100%;
+            height: 100%;
+            background: url("https://www.transparenttextures.com/patterns/stardust.png");
+            animation: moveStars 20s linear infinite;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: -1;
+          }
+
+          @keyframes moveStars {
+            from { background-position: 0 0; }
+            to { background-position: -1000px 1000px; }
+          }
+
+          /* OVNI animado */
+          .ovni {
+            font-size: 80px;
+            position: absolute;
+            animation: fly 6s ease-in-out infinite;
+          }
+
+          @keyframes fly {
+            0%   { top: 10%; left: 10%; transform: rotate(0deg); }
+            25%  { top: 40%; left: 70%; transform: rotate(20deg); }
+            50%  { top: 80%; left: 50%; transform: rotate(-10deg); }
+            75%  { top: 30%; left: 20%; transform: rotate(10deg); }
+            100% { top: 10%; left: 10%; transform: rotate(0deg); }
+          }
+
+          marquee {
+            font-size: 28px;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+          }
+        </style>
+      </head>
+
+      <body>
+        <div class="stars"></div>
+
+        <div class="ovni">🛸</div>
+
+        <marquee>Bienvenido a la API de Polaris Gestión. Visite nuestro sitio web para más información.</marquee>
+      </body>
+    </html>
+  `);
 });
+
 
 // Sincroniza la base de datos y empieza el servidor
 sequelize

@@ -1,46 +1,45 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../database');
-
-const User = sequelize.define('User', {
+const User = require('./users');
+const UserInfo = sequelize.define('UserInfo', {
     id: {
         type: DataTypes.BIGINT,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
     },
-    name: {
-        type: DataTypes.STRING,
+    user_id: {
+        type: DataTypes.BIGINT,
         allowNull: false,
+        references: {
+            model: User,
+            key: 'id',
+        }
     },
-    document: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    phone: {
+    address: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    email: {
+    neiborhood: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    password: {
+    city: {
         type: DataTypes.STRING,
         allowNull: true,
     },
-    rol: {
+    voting_point:{
         type: DataTypes.STRING,
-        allowNull: false,
-    },
-    status: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
-    },
-}, {
-    tableName: "Users",
+        allowNull: true,
+    }
+},{
+    tableName: "UserInfo",
     timestamps: true,
     paranoid: true,
 });
 
-module.exports = User;
+User.hasOne(UserInfo, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+UserInfo.belongsTo(User, { foreignKey: 'user_id', onDelete: 'CASCADE' });
+
+
+module.exports = UserInfo;

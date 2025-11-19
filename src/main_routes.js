@@ -10,7 +10,11 @@ const verifyRoles = require("./middleware/verifyRoles");
 router.use('/login', require('./routes/auth/login'));
 
 
-// Admin routes (Protected)
-router.use('/admin/users', authenticateJWT, verifyRoles(['superadmin', 'admin']), require('./routes/admin/users'));
+// Admin routes
+router.use('/admin/users', authenticateJWT, verifyRoles(['admin']), require('./routes/admin/users'));
+
+
+//superadmin routes
+router.use('/superadmin/users', authenticateJWT, verifyRoles(['superadmin']), require('./routes/superadmin/users'));
 
 module.exports = router;
